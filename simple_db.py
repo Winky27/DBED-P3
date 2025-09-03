@@ -73,3 +73,34 @@ class SimpleDatabase:
                 selected_rows.append(row)
         
         return self.header, selected_rows
+
+    def create_index(self, column_name):
+        if self.header is None:
+            print("No table loaded")
+            return
+        
+        if column_name not in self.columns:
+            print(f"Column {column_name} does not exist")
+            return
+        
+        col_id = self.columns[column_name]
+        if column_name in self.indexed_columns:
+            print(f"Index already exists on {column_name}")
+            return
+        
+
+    def drop_index(self, column_name):
+        if column_name not in self.columns:
+            print(f"Column {column_name} does not exist")
+            return
+        
+        if self.header is None:
+            print("No table loaded")
+            return
+        
+        if column_name not in self.indexed_columns:
+            print(f"No index exists on {column_name}.")
+            return
+
+       
+
