@@ -78,7 +78,18 @@ def run_engine():
                 print("Time elapsed: ", round(1000*(end - start)), " ms")
 
         # add code for processing create index and drop index here ...
-            
+        # create index on 
+        #db.create_index(column_name)
+
+        #drop index on <column_name>
+        #db.drop_index(column_name)
+        #update the select rows  - uses index 
+
+
+
+
+
+
         else:
             print("Unrecognized command!")
 

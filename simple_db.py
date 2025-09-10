@@ -83,11 +83,18 @@ class SimpleDatabase:
             print(f"Column {column_name} does not exist")
             return
         
-        col_id = self.columns[column_name]
         if column_name in self.indexed_columns:
             print(f"Index already exists on {column_name}")
             return
-        
+        col_id = self.columns[column_name]
+
+        #create b tree index
+        values = [row[col_id] for row in self.rows]
+        btree = BTree()
+        for i, value in enumerate(values):
+            btree.insert_key(value, i)
+        self.indexed_columns[column_name] = btree
+        print(f"Index created for column {column_name}")
 
     def drop_index(self, column_name):
         if column_name not in self.columns:
@@ -99,8 +106,7 @@ class SimpleDatabase:
             return
         
         if column_name not in self.indexed_columns:
-            print(f"No index exists on {column_name}.")
+            print(f"No index exists on {column_name}")
             return
 
-       
 
