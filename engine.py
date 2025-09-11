@@ -80,14 +80,17 @@ def run_engine():
         # add code for processing create index and drop index here ...
         # create index on 
         #db.create_index(column_name)
+        elif command.startswith("create index on "):
+            column_name = command[len("create index on "):]
+            db.create_index(column_name)
 
         #drop index on <column_name>
         #db.drop_index(column_name)
         #update the select rows  - uses index 
-
-
-
-
+        elif command.startswith("drop index on "):
+            column_name = command[len("drop index on "):]
+            db.drop_index(column_name)
+            print(f"Index for column '{column_name}' dropped. Next select for '{column_name}' will use linear search.")
 
 
         else:
