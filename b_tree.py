@@ -129,7 +129,7 @@ def generate_data(data_size, max_value):
     return array, verification
     
 def evaluation(rand_seed = None, max_value = 1000, num_queries = 1000):
-    data_sizes = [100, 1000, 10000, 100000];
+    data_sizes = [100, 1000, 10000, 100000]
     
     random.seed(a=rand_seed)
     for data_size in data_sizes:

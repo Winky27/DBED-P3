@@ -13,7 +13,7 @@ class SimpleDatabase:
         
         # map column name to column index in the header
         self.columns = None
-        
+        self.indexed_columns = dict()
         # None if table is not loaded
         # otherwise list b-tree indices corresponding to columns 
         self.b_trees = None
@@ -64,14 +64,25 @@ class SimpleDatabase:
         if column_name not in self.columns:
             # no such column
             return self.header, []
-            
+
+        # early return if column is indexed
+        if column_name in self.indexed_columns:
+            ColumnBTree: BTree = self.indexed_columns[column_name]
+            x, _ = ColumnBTree.search_key(column_value)
+            row_numbers = x.key_vals[0][1]
+            selected_rows = []
+            for row_id in row_numbers:
+                selected_rows.append(self.rows[row_id])
+            return self.header, selected_rows
+
+        # linear search
         col_id = self.columns[column_name]
         
         selected_rows = []
         for row in self.rows:
             if row[col_id] == column_value:
                 selected_rows.append(row)
-        
+        print(selected_rows)
         return self.header, selected_rows
 
     def create_index(self, column_name):
@@ -86,6 +97,7 @@ class SimpleDatabase:
         if column_name in self.indexed_columns:
             print(f"Index already exists on {column_name}")
             return
+
         col_id = self.columns[column_name]
 
         #create b tree index
@@ -93,6 +105,7 @@ class SimpleDatabase:
         btree = BTree()
         for i, value in enumerate(values):
             btree.insert_key(value, i)
+        # store index
         self.indexed_columns[column_name] = btree
         print(f"Index created for column {column_name}")
 
@@ -108,5 +121,5 @@ class SimpleDatabase:
         if column_name not in self.indexed_columns:
             print(f"No index exists on {column_name}")
             return
-
-
+        
+        self.indexed_columns.pop(column_name)
