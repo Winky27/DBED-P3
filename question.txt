@@ -6,11 +6,26 @@ Suppose that you are given source code for a DBMS that does not support indexing
 *** It is important to justify / explain your answer ***
 
 Answer:
-The indexes I would test on first would be to create a few tables and test different kinds of indexes (like single column, multi column, unique, and non unique indexes).
-Next, I would insert, update, and delete data to ensure that indexes are created, updated, and removed correctly, and that any changes are reflected in the indexed columns. 
+1. Performance Validation
 As a way to test performance and accuracy, I would run SELECT statements with WHERE statements based on the indexed columns and compare results and execution times with and without indexes to ensure that queries are executed more quickly and the results are correct.
-Also, I would test edge cases (like finding missing values or nulls or out of range data)to make sure the indexes do not affect the query logic.
-Then, to ensure consistency and integrity, I would commitand rollbacks on an indexed column, and ensure that the data and the index structures are consistent even after a failure or rollback.
-I would also drop, recreate and rebuild indexes to ensure that the metadata and storage are correct as per the existing schema and load lots of data (like bulk and batch operations) to test the response of the indexing engine to the load.
-Beyond that, I would make parallel changes on two threads to seek race conditions or locking issues.
+
+2. Index Functionality Testing
+The indexes I would test on first would be to create a few tables and test different kinds of indexes (like single column, multi column, unique, and non unique indexes).
+
+3. Data Modification Testing
+Next, I would insert, update, and delete data to ensure that indexes are created, updated, and removed correctly, and that any changes are reflected in the indexed columns. 
+
+4. Index Management and Scalability
+I would also drop, recreate and rebuild indexes to ensure that the metadata and storage are correct as per the existing schema and load lots of data (like bulk and batch operations) to challenge the indexing engine’s scalability.
+
+5. Edge Case Analysis
+Also, I would test edge cases (like finding missing values or nulls or out of range data) to make sure the indexes do not affect the query logic.
+
+6. Consistency and Integrity Checks
+Then, to ensure consistency and integrity, I would commit and rollbacks on an indexed column, and ensure that the data and the index structures are consistent even after a failure or rollback.
+
+7. Concurrency Testing
+Beyond that, run concurrent modifications (on multiple threads) of indexed columns, to check race condition and locking problem checking.
+
+8. Regression Testing
 Lastly, I would compare the data retrieval and modification outcomes with the data that was present before the indexing and ensure that the addition of indexes does not negatively affect the performance without introducing new errors or functionality.
