@@ -96,7 +96,7 @@ def run_engine():
         else:
             print("Unrecognized command!")
 
-        print() # empty line after each command
+        print() 
 
 
 if __name__ == "__main__":
